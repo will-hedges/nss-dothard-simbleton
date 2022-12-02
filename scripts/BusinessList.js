@@ -23,3 +23,33 @@ export const AllBusinesses = () => {
   });
   return allBusinessesList.join("<hr>") + "<hr>";
 };
+
+document
+  .querySelector("#content")
+  .addEventListener("keypress", (keyPressEvent) => {
+    const companySearchResultArticle =
+      document.querySelector(".foundBusinesses");
+
+    if (keyPressEvent.charCode === 13) {
+      /*
+        When the user presses 'Enter', find the matching business.
+
+
+        You can use the `.includes()` string method to
+        see if a smaller string is part of a larger string.
+
+        Example:
+          if (business.companyName.includes(keyPressEvent.target.value)) {
+
+          }
+    */
+
+      const foundBusiness = businesses.find((business) =>
+        business.companyName.includes(keyPressEvent.target.value)
+      );
+
+      companySearchResultArticle.innerHTML = `${renderCompanyHTML(
+        foundBusiness
+      )}`;
+    }
+  });
