@@ -1,17 +1,25 @@
 import { getBusinesses } from "./database.js";
 
-export const BusinessList = () => {
-  const businesses = getBusinesses();
-  let businessesHTML = "";
+const businesses = getBusinesses();
+
+export const renderCompanyHTML = (businessObj) => {
+  const companyHTML = `
+    <section class="business">
+      <h3 class="business__name">${businessObj.companyName}</h3>
+      <p class="business__address">
+        ${businessObj.addressFullStreet}
+        <br>
+        ${businessObj.addressCity}, ${businessObj.addressStateCode} ${businessObj.addressZipCode}  
+      </p>
+  </section>`;
+  return companyHTML;
+};
+
+// make and export a list of all businesses
+export const AllBusinesses = () => {
+  const allBusinessesList = [];
   businesses.forEach((businessObj) => {
-    businessesHTML += `
-      <section class="business">
-        <h2 class="business__name">${businessObj.companyName}<h2>
-        <p class="business__address">
-          ${businessObj.addressFullStreet}
-          ${businessObj.addressCity}, ${businessObj.addressStateCode} ${businessObj.addressZipCode}  
-        </p>
-      </section>`;
+    allBusinessesList.push(renderCompanyHTML(businessObj));
   });
-  return businessesHTML;
+  return allBusinessesList.join("<hr>") + "<hr>";
 };
